@@ -56,7 +56,9 @@ public class GeminiClient {
                         || response.statusCode() == 403 || response.statusCode() == 404) {
                     throw new IOException("Permanent error: HTTP " + response.statusCode());
                 }
-                long delay = (long) Math.pow(2, attempt) * (response.statusCode() == 429 ? 10000 : 4000);
+                long delay = response.headers().firstValue("Retry-After")
+                        .map(v -> Long.parseLong(v) * 1000)
+                        .orElse((long) Math.pow(2, attempt) * (response.statusCode() == 429 ? 10000 : 4000));
                 System.err.println("Status " + response.statusCode() + ". Retrying in " + (delay / 1000) + "s...");
                 Thread.sleep(delay);
             } catch (IOException e) {
