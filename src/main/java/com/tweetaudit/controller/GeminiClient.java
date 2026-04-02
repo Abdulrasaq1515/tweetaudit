@@ -16,7 +16,8 @@ import java.util.Map;
 
 public class GeminiClient {
     private final HttpClient client = HttpClient.newBuilder()
-            .version(HttpClient.Version.HTTP_1_1)
+            .version(HttpClient.Version.HTTP_2)
+            .connectTimeout(java.time.Duration.ofSeconds(30))
             .build();
     private final ObjectMapper mapper = new ObjectMapper();
 
@@ -59,7 +60,7 @@ public class GeminiClient {
                 System.err.println("Status " + response.statusCode() + ". Retrying in " + (delay / 1000) + "s...");
                 Thread.sleep(delay);
             } catch (IOException e) {
-                System.err.println("Network error: " + e.getMessage() + ". Retrying...");
+                System.err.println("Network error: " + e.getClass().getSimpleName() + " - " + e.getMessage() + ". Retrying...");
                 if (attempt == maxAttempts - 1) throw e;
                 Thread.sleep((long) Math.pow(2, attempt) * 2000);
             }
