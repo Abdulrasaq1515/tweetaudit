@@ -1,0 +1,13 @@
+{
+  "geminiApiKey": "",
+  "archivePath": "C:/Users/dell/Downloads/data/tweets.js",
+  "outputPath": "./output/flagged.csv",
+  "checkpointPath": "./output/checkpoint.txt",
+  "batchSize": 10,
+  "username": "abdulra50445351",
+  "criteria": {
+    "forbiddenWords": ["politics", "election", "vote", "democrat", "republican", "liberal", "conservative", "protest", "regime", "propaganda", "damn", "hell", "idiot", "stupid", "hate", "loser", "shut up", "buy now", "click here", "follow back", "DM me", "promo", "discount", "giveaway", "free money", "make money"],
+    "toneCheck": true,
+    "flagDuplicates": true
+  }
+}
